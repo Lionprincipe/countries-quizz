@@ -3,17 +3,21 @@ import AnswerItem from '../components/AnswerItem'
 import { ReactComponent as QuizzIllustration } from '../assets/quizz_illustration.svg'
 
 type QuestionsScreenProps = {
+  roundCount: number
+  totalQuestion: number
   question: string
   answers: string[]
   validAnswer?: string
-  checkValidAnswer: (answer: string, selected: string) => boolean
+  onNext: (hasSucceeded: boolean) => void
 }
 
 const QuestionScreen: React.FC<QuestionsScreenProps> = ({
   question,
   answers,
   validAnswer,
-  checkValidAnswer,
+  totalQuestion,
+  roundCount,
+  onNext,
 }) => {
   const [selectedAnswer, setSelectedAnswer] = useState<null | string>(null)
 
@@ -30,7 +34,9 @@ const QuestionScreen: React.FC<QuestionsScreenProps> = ({
       }`}
     >
       <QuizzIllustration className='quizz-illustration' />
-
+      <h3 className='question-label'>
+        Question {roundCount}/ {totalQuestion}
+      </h3>
       <h2>{question}</h2>
       {answers.length > 0 && (
         <ul>
@@ -46,7 +52,15 @@ const QuestionScreen: React.FC<QuestionsScreenProps> = ({
           ))}
         </ul>
       )}
-      <button className='next-button'>next</button>
+      <button
+        className='next-button'
+        onClick={() => {
+          setSelectedAnswer(null)
+          onNext(selectedAnswer === validAnswer)
+        }}
+      >
+        next
+      </button>
     </div>
   )
 }

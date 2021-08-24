@@ -1,30 +1,33 @@
-import React from 'react'
-
 import './App.css'
 import Layout from './components/Layout'
+import { useCountryQuizzHook } from './hooks/useCountryQuizzhook'
 import QuestionScreen from './screens/QuestionScreen'
 import ResultScreen from './screens/ResultScreen'
 
 function App() {
-  const question = 'Kuala Lumpur is the capital of'
-  const answers = ['Vietnam', 'Malaysia', 'Sweden', 'Austria']
-  const validAnswer = 'Malaysia'
-  const checkValidAnswer = (answer: string, selected: string) => {
-    return answer === selected
-  }
-  const isPlayOn = false
+  const {
+    score,
+    currentQuestion,
+    totalQuestions,
+    roundCount,
+    handleStartNextRound,
+    gameOn,
+    resetGame,
+  } = useCountryQuizzHook()
   return (
     <div className='App'>
       <Layout>
-        {isPlayOn ? (
-          <QuestionScreen
-            question={question}
-            answers={answers}
-            checkValidAnswer={checkValidAnswer}
-            validAnswer={validAnswer}
-          />
+        {gameOn ? (
+          <>
+            <QuestionScreen
+              {...currentQuestion}
+              roundCount={roundCount}
+              totalQuestion={totalQuestions}
+              onNext={handleStartNextRound}
+            />
+          </>
         ) : (
-          <ResultScreen />
+          <ResultScreen score={score} onTryAgain={() => resetGame()} />
         )}
       </Layout>
     </div>
