@@ -1,12 +1,18 @@
 import React from 'react'
-import { ReactComponent as QuizzIllustration } from '../assets/quizz_illustration.svg'
-const Layout: React.FC = ({ children }) => {
+
+type LayoutProps = {
+  disableIllustration?: boolean
+}
+
+const Layout: React.FC<LayoutProps> = ({
+  children,
+  disableIllustration = false,
+}) => {
   return (
     <>
       <main className='container'>
         <header>
           <h1 className='heading'>Country Quiz</h1>
-          <QuizzIllustration className='quizz-illustration' />
         </header>
         {children}
       </main>
