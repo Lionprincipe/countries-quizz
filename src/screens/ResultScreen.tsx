@@ -1,6 +1,8 @@
 import React from 'react'
 import { ReactComponent as ResultIllustration } from '../assets/result_illustration.svg'
 
+import './ResultScreen.style.css'
+
 type ResultScreenProps = {
   score?: number
   onTryAgain: () => void

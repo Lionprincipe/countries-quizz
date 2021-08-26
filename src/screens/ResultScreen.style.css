@@ -1,0 +1,58 @@
+.result-illustration {
+  width: 50%;
+}
+
+.result-info {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.125rem;
+  line-height: 1.5em;
+}
+
+.result-info strong {
+  font-weight: 700;
+  font-size: 2.25rem;
+  line-height: 1.55em;
+  color: var(--main-success-color);
+}
+
+.result-card {
+  display: flex;
+  background: #ffffff;
+  border-radius: 24px;
+  flex-direction: column;
+  align-items: center;
+  padding: 2em;
+}
+
+.result-card p {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.125rem;
+  line-height: 1.5em;
+  color: var(--primary-dark-color);
+}
+
+.result-card h2 {
+  margin-top: 1.5em;
+  text-align: center;
+  font-size: 3rem;
+  line-height: 1.5em;
+}
+
+.result-card button {
+  border: 2px solid var(--primary-dark-color);
+  margin-top: 4em;
+  box-sizing: border-box;
+  border-radius: 12px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1.125rem;
+  text-align: center;
+  line-height: 1.5em;
+  color: var(--primary-dark-color);
+  padding: 1em 3.39em;
+}

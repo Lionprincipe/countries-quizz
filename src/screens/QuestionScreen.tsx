@@ -2,11 +2,14 @@ import React, { useState } from 'react'
 import AnswerItem from '../components/AnswerItem'
 import { ReactComponent as QuizzIllustration } from '../assets/quizz_illustration.svg'
 
+import './QuestionScreen.style.css'
+
 type QuestionsScreenProps = {
   roundCount: number
   totalQuestion: number
   question: string
   answers: string[]
+  urlFlag?: string
   validAnswer?: string
   onNext: (hasSucceeded: boolean) => void
 }
@@ -17,6 +20,7 @@ const QuestionScreen: React.FC<QuestionsScreenProps> = ({
   validAnswer,
   totalQuestion,
   roundCount,
+  urlFlag,
   onNext,
 }) => {
   const [selectedAnswer, setSelectedAnswer] = useState<null | string>(null)
@@ -37,8 +41,11 @@ const QuestionScreen: React.FC<QuestionsScreenProps> = ({
       <h3 className='question-label'>
         Question {roundCount}/ {totalQuestion}
       </h3>
+      {urlFlag && (
+        <img srcSet={urlFlag} className='flag-image' alt={question} />
+      )}
       <h2>{question}</h2>
-      {answers.length > 0 && (
+      {answers && answers.length > 0 && (
         <ul>
           {answers.map((answer) => (
             <AnswerItem

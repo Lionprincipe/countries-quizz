@@ -1,0 +1,118 @@
+.quizz-card {
+  position: relative;
+  padding: 4.25rem 2rem 0;
+  background: #ffffff;
+  border-radius: 24px;
+}
+
+.quizz-illustration {
+  position: absolute;
+  top: -4.625rem;
+  right: 0;
+  width: 10.125rem;
+}
+
+.question-label {
+  position: absolute;
+  top: 1.11em;
+  font-size: 1.125rem;
+  text-align: center;
+  line-height: 1.5em;
+  color: var(--main-success-color);
+}
+
+.flag-image {
+  display: block;
+  width: 5.25rem;
+  margin-bottom: 1.75rem;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.quizz-card h2 {
+  margin-bottom: 1.33em;
+  font-size: 1.5rem;
+  line-height: 1.5em;
+  color: var(--primary-dark-color);
+}
+.quizz-card ul {
+  counter-reset: listStyle;
+}
+
+.quizz-answer-item::before {
+  content: counter(listStyle, upper-alpha);
+  padding-right: 3rem;
+}
+
+.quizz-answer-item {
+  overflow: scroll;
+  cursor: pointer;
+  counter-increment: listStyle;
+  background: #ffffff;
+  border: 2px solid var(--primary-color-variation);
+  box-sizing: border-box;
+  border-radius: 12px;
+  min-height: 3.11em;
+  display: flex;
+  max-height: 8.33em;
+
+  padding: 0.83em 1.11em;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.125rem;
+  line-height: 1.5em;
+
+  color: var(--primary-color);
+}
+
+.quizz-answer-item:not(:last-child) {
+  margin-bottom: 1.78em;
+}
+
+.quizz-card.is-showing-question {
+  padding-bottom: 4.25rem;
+}
+.quizz-card.is-showing-result {
+  padding-bottom: 2rem;
+}
+
+.quizz-card.is-showing-question .quizz-answer-item:hover {
+  background: var(--accent-color);
+  color: #f2f2f2;
+  border: none;
+}
+
+.quizz-card.is-showing-result .quizz-answer-item {
+  cursor: not-allowed;
+}
+
+.next-button {
+  display: block;
+  margin-top: 1.33em;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1.125rem;
+  line-height: 1.5em;
+  background: var(--accent-color);
+  color: #ffffff;
+  padding: 0.83em 2.21em;
+  box-shadow: 0px 2px 4px rgba(252, 168, 47, 0.4);
+  border-radius: 12px;
+  margin-left: auto;
+}
+
+.quizz-card.is-showing-question .next-button {
+  display: none;
+}
+
+.quizz-card.is-showing-result .quizz-answer-item.faillure {
+  color: #f2f2f2;
+  background: var(--main-failure-color);
+  border: none;
+}
+.quizz-card.is-showing-result .quizz-answer-item.success {
+  color: #f2f2f2;
+  background: var(--main-success-color);
+  border: none;
+}

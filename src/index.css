@@ -1,11 +1,27 @@
+:root {
+  --main-color: brown;
+  --main-success-color: #60bf88;
+  --main-failure-color: #ea8282;
+  --primary-color: rgba(96, 102, 208, 0.8);
+  --primary-color-variation: rgba(96, 102, 208, 0.7);
+
+  --accent-color: #f9a826;
+  --primary-dark-color: #2f527b;
+  --text-white-variant-color: #f2f2f2;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   margin-block: 0;
 }
+html {
+  font-size: 16px;
+}
 
 body {
+  font-size: 16px;
   font-family: Poppins, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
     'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
