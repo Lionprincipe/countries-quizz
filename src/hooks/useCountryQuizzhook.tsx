@@ -1,36 +1,30 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
-import { callFnNtime, getNRandomItemsFromList, getRndInteger } from '../utils'
 
-export type Question = {
-  question: string
-  answers: string[]
-  validAnswer?: string
-  urlFlag?: string
-}
+import {
+  callFnNtime,
+  getNRandomItemsFromListWithExceptions,
+  getRndInteger,
+} from '../utils'
 
-interface APIDataType {
-  capital: string
-  flag: string
-  name: string
-  language: { name: string }[]
-}
+import { fetchCoutriesData } from '../API'
+
+import { IData, IQuestion, QuestionType } from '../types'
+
+const NB_QUESTIONS = 10
+const NB_ANSWERS = 4
+const QUESTION_TYPES = [QuestionType.CAPITAL, QuestionType.FLAG]
 
 export const useCountryQuizzHook = () => {
-  const NB_QUESTIONS = 10
-  const NB_ANSWERS = 4
-  const url =
-    'https://restcountries.eu/rest/v2/all?fields=name;capital;flag;languages'
-  const [data, setData] = useState<APIDataType[]>([])
-  const [questions, setQuestions] = useState<Question[]>([])
+  const [data, setData] = useState<IData[]>([])
+  const [questions, setQuestions] = useState<IQuestion[]>([])
   const [exceptions, setExceptions] = useState<number[]>([])
   const [score, setScore] = useState(0)
   const [roundIndex, setRoundIndex] = useState(0)
   const [gameOn, setGameOn] = useState(true)
 
-  const initGame = (data: APIDataType[]) => {
+  const initGame = (data: IData[]) => {
     const questionCountries = callFnNtime(NB_QUESTIONS, () => {
-      return getNRandomItemsFromList(data, NB_ANSWERS, exceptions)
+      return getNRandomItemsFromListWithExceptions(data, NB_ANSWERS, exceptions)
     })
     const questions = composeCountriesQuestions(questionCountries)
     setQuestions(questions)
@@ -38,13 +32,16 @@ export const useCountryQuizzHook = () => {
   }
 
   useEffect(() => {
-    axios
-      .get(url)
-      .then((response: { data: APIDataType[] }) => {
-        setData(response.data)
-        initGame(response.data)
-      })
-      .catch((err) => console.log(err))
+    const getData = async () => {
+      try {
+        const pasedData = await fetchCoutriesData()
+        setData(pasedData)
+        initGame(pasedData)
+      } catch (err) {
+        console.log('coould not receive data from the server', err)
+      }
+    }
+    getData()
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -71,7 +68,7 @@ export const useCountryQuizzHook = () => {
     currentQuestion: questions[roundIndex],
     handleStartNextRound,
     totalQuestions: questions.length,
-    roundCount: roundIndex + 1,
+    roundCount: roundIndex > 0 ? roundIndex + 1 : 0,
     score,
     gameOn,
     roundIndex,
@@ -81,7 +78,7 @@ export const useCountryQuizzHook = () => {
 
 const composeCountriesQuestions = (
   questionCountries: {
-    selected: APIDataType[]
+    selected: IData[]
     exceptions: number[]
   }[]
 ) => {
@@ -90,18 +87,19 @@ const composeCountriesQuestions = (
     const answers = selected.map(({ name }) => name)
     const { name, capital, flag } = selected[answerIndex]
 
-    const type = getRndInteger(1, 2)
+    const type = getNRandomItemsFromListWithExceptions(QUESTION_TYPES, 1, [])
+      .selected[0]
 
     switch (type) {
       default:
-      case 1: {
+      case QuestionType.CAPITAL: {
         return {
           question: `${capital} is the capital of`,
           answers,
           validAnswer: name,
         }
       }
-      case 2: {
+      case QuestionType.FLAG: {
         return {
           question: `Which country does this flag belong to?`,
           urlFlag: flag,

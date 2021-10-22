@@ -39,7 +39,7 @@ const QuestionScreen: React.FC<QuestionsScreenProps> = ({
     >
       <QuizzIllustration className='quizz-illustration' />
       <h3 className='question-label'>
-        Question {roundCount}/ {totalQuestion}
+        {` Question ${roundCount} / ${totalQuestion}`}
       </h3>
       {urlFlag && (
         <img srcSet={urlFlag} className='flag-image' alt={question} />

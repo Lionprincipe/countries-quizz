@@ -10,7 +10,7 @@ export function getRndInteger(
   return selected
 }
 
-export function getNRandomItemsFromList<T>(
+export function getNRandomItemsFromListWithExceptions<T>(
   data: T[],
   nbItems: number,
   exceptions: number[]
